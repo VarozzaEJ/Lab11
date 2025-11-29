@@ -308,7 +308,7 @@ public class ListTester {
 		// 	listToUse = new IUArrayList<Integer>();
 		// 	break;
 		case singleLinkedList:
-			listToUse = new IUSingleLinkedList<Integer>();
+			listToUse = new IUDoubleLinkedList<Integer>();
 			break;
 		// case doubleLinkedList:
 		// 	listToUse = new IUDoubleLinkedList<Integer>();
@@ -729,6 +729,38 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> ABC_iteratorNextRemove_NextRemove_NextRemove_empty = () -> ABC_iteratorNextRemove_NextRemove_NextRemove_empty();
+
+	/** Scenario #57: [A,B] -> iterator(1), next(), remove() -> [A] Evan
+	 * @return [A] after iterator, next(), remove()
+	 */
+
+	/** Scenario #60: [A,B,C] -> iterator(1), next(), remove() -> [A,C] Gabe
+	 * @return [A,C] after iterator(1), next(), remove()
+	 */
+
+	/** Scenario #66: [A] -> iterator(1), previous(), remove() -> [] Wesley
+	 * @return [] after iterator(1), previous(), remove()
+	 */
+
+	/** Scenario #71: [A,B,C] -> iterator(2), previous(), remove() -> [A,C] Nazifa
+	 * @return [A,C] after iterator(2), previous(), remove()
+	 */
+
+	/** Scenario #87: [A,B] -> iterator(0), next(), add(C) -> [A,C,B] Daniel
+	 * @return [A] after iterator(0), next(), add(C)
+	 */
+
+	/** Scenario #90: [A,B] -> iterator(2), previous(), add(C) -> [A,C,B] Evan
+	 * @return [A,B] after iterator(2), previous(), add(C)
+	 */
+
+	/** Scenario #96: [A,B,C] -> iterator(1), next(), set(D) -> [A,D,C] Gabe
+	 * @return [A,D,C] after iterator(1), next(), set(D)
+	 */
+
+	/** Scenario #99: [A,B,C] -> iterator(2), previous(), set(D) -> [A,D,C] Wesley
+	 * @return [A] after iterator, previous(), set(D)
+	 */
 
 	 
 	/////////////////////////////////
