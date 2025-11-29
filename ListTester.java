@@ -273,6 +273,7 @@ public class ListTester {
 			// Scenario: 60
 
 			// Scenario: 66
+		testEmptyList(A_iterator1PreviousRemove_empty, "A_iterator1PreviousRemove_empty");
 
 			// Scenario: 71
 
@@ -283,6 +284,7 @@ public class ListTester {
 			// Scenario: 96
 
 			// Scenario: 99
+		testThreeElementList(ABC_iterator2PreviousSetD_ADC, "ABC_iterator2PreviousSetD_ADC", LIST_ADC, STRING_ADC);
 		}
 
 
@@ -763,6 +765,14 @@ public class ListTester {
 	/** Scenario #66: [A] -> iterator(1), previous(), remove() -> [] Wesley
 	 * @return [] after iterator(1), previous(), remove()
 	 */
+	private IndexedUnsortedList<Integer> A_iterator1PreviousRemove_empty() {
+		IndexedUnsortedList<Integer> list = emptyList_addToFrontA_A();
+		ListIterator<Integer> iter = list.listIterator(1);
+		iter.previous();
+		iter.remove();
+		return list;
+	}
+	private Scenario<Integer> A_iterator1PreviousRemove_empty = () -> A_iterator1PreviousRemove_empty();
 
 	/** Scenario #71: [A,B,C] -> iterator(2), previous(), remove() -> [A,C] Nazifa
 	 * @return [A,C] after iterator(2), previous(), remove()
@@ -789,6 +799,14 @@ public class ListTester {
 	/** Scenario #99: [A,B,C] -> iterator(2), previous(), set(D) -> [A,D,C] Wesley
 	 * @return [A] after iterator, previous(), set(D)
 	 */
+	private IndexedUnsortedList<Integer> ABC_iterator2PreviousSetD_ADC() {
+		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
+		ListIterator<Integer> iter = list.listIterator(2);
+		iter.previous();
+		iter.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_iterator2PreviousSetD_ADC = () -> ABC_iterator2PreviousSetD_ADC();
 
 	 
 	/////////////////////////////////
