@@ -293,6 +293,10 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             modCount++;
             iterModCount++;
         }
+
+        public E previous() {
+            return null;
+        }
 	}
 
 	// IGNORE THE FOLLOWING CODE
