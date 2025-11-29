@@ -268,7 +268,21 @@ public class ListTester {
 		//List Iterator Scenarios
 		//FIXME All new scenarios for double linked list goes here.
 		if (SUPPORTS_LIST_ITERATOR) {
-			// Place List Iterator Scenarios Here...
+			// Scenario: 57
+		testSingleElementList(AB_iterator1NextRemove_A, "AB_iterator1NextRemove_A", LIST_A, STRING_A);
+			// Scenario: 60
+
+			// Scenario: 66
+
+			// Scenario: 71
+
+			// Scenario: 87
+
+			// Scenario: 90
+
+			// Scenario: 96
+
+			// Scenario: 99
 		}
 
 
@@ -733,6 +747,14 @@ public class ListTester {
 	/** Scenario #57: [A,B] -> iterator(1), next(), remove() -> [A] Evan
 	 * @return [A] after iterator, next(), remove()
 	 */
+	private IndexedUnsortedList<Integer> AB_iterator1NextRemove_A() {
+		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
+		Iterator<Integer> iter = list.listIterator(1);
+		iter.next();
+		iter.remove();
+		return list;
+	}
+	private Scenario<Integer> AB_iterator1NextRemove_A = () -> AB_iterator1NextRemove_A();
 
 	/** Scenario #60: [A,B,C] -> iterator(1), next(), remove() -> [A,C] Gabe
 	 * @return [A,C] after iterator(1), next(), remove()
