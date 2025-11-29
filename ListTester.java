@@ -775,7 +775,13 @@ public class ListTester {
 	/** Scenario #90: [A,B] -> iterator(2), previous(), add(C) -> [A,C,B] Evan
 	 * @return [A,B] after iterator(2), previous(), add(C)
 	 */
-
+	private IndexedUnsortedList<Integer> AB_iterator2PreviousAddC_ACB() {
+		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
+		Iterator<Integer> iter = list.listIterator(2);
+		iter.previous();
+		iter.add(C);
+		return list;
+	}
 	/** Scenario #96: [A,B,C] -> iterator(1), next(), set(D) -> [A,D,C] Gabe
 	 * @return [A,D,C] after iterator(1), next(), set(D)
 	 */

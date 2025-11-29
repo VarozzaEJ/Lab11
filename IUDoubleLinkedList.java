@@ -1,3 +1,4 @@
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -227,20 +228,84 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return new DLLIterator();
     }
 
-    @Override
-    public ListIterator<E> listIterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
-    }
+    private class DLLIterator implements Iterator<E> {
+		private BidirectionalNode<E> previous;
+		private BidirectionalNode<E> current;
+		private BidirectionalNode<E> next;
+		private int iterModCount;
+		private boolean removeable;
+		
+		/** Creates a new iterator for the list */
+		public DLLIterator() {
+			previous = null;
+			current = null;
+			next = front;
+			iterModCount = modCount;
+		}
 
-    @Override
-    public ListIterator<E> listIterator(int startingIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
-    }
+		@Override
+		public boolean hasNext() {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            return next != null;
+        }
+
+		@Override
+		public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            if (current != null) {
+                previous = current;
+            }
+            current = next;
+            next = next.getNext();
+            removeable = true;
+            return current.getElement();
+        }
+		
+		@Override
+		public void remove() {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+			if (!removeable) {
+				throw new IllegalStateException();
+			}
+            if (current == null) {
+                throw new IllegalStateException();
+            }
+            if (previous == null) {
+                front = next;
+            } else {
+                previous.setNext(next);
+            }
+            if (current == rear) {
+                rear = previous;
+            }
+            current = null;
+            removeable = false;
+            count--;
+            modCount++;
+            iterModCount++;
+        }
+	}
+
+	// IGNORE THE FOLLOWING CODE
+	// DON'T DELETE ME, HOWEVER!!!
+	@Override
+	public ListIterator<E> listIterator() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ListIterator<E> listIterator(int startingIndex) {
+		throw new UnsupportedOperationException();
+	}
+
     
 }
