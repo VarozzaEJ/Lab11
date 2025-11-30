@@ -751,7 +751,7 @@ public class ListTester {
 	 */
 	private IndexedUnsortedList<Integer> AB_iterator1NextRemove_A() {
 		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
-		Iterator<Integer> iter = list.listIterator(1);
+		ListIterator<Integer> iter = list.listIterator(1);
 		iter.next();
 		iter.remove();
 		return list;
@@ -787,9 +787,9 @@ public class ListTester {
 	 */
 	private IndexedUnsortedList<Integer> AB_iterator2PreviousAddC_ACB() {
 		IndexedUnsortedList<Integer> list = A_addToRearB_AB();
-		Iterator<Integer> iter = list.listIterator(2);
+		ListIterator<Integer> iter = list.listIterator(2);
 		iter.previous();
-		iter.add(C);
+		iter.add(ELEMENT_C);
 		return list;
 	}
 	/** Scenario #96: [A,B,C] -> iterator(1), next(), set(D) -> [A,D,C] Gabe

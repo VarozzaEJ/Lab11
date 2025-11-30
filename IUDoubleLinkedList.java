@@ -303,7 +303,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 	// DON'T DELETE ME, HOWEVER!!!
 	@Override
 	public ListIterator<E> listIterator() {
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override
