@@ -280,7 +280,7 @@ public class ListTester {
 			// Scenario: 87
 
 			// Scenario: 90
-
+		testThreeElementList(AB_iterator2PreviousAddC_ACB, "AB_iterator2PreviousAddC_ACB", LIST_ACB, STRING_ACB);
 			// Scenario: 96
 
 			// Scenario: 99
@@ -792,6 +792,7 @@ public class ListTester {
 		iter.add(ELEMENT_C);
 		return list;
 	}
+	private Scenario<Integer> AB_iterator2PreviousAddC_ACB = () -> AB_iterator2PreviousAddC_ACB();
 	/** Scenario #96: [A,B,C] -> iterator(1), next(), set(D) -> [A,D,C] Gabe
 	 * @return [A,D,C] after iterator(1), next(), set(D)
 	 */
