@@ -293,17 +293,134 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             modCount++;
             iterModCount++;
         }
-
-        public E previous() {
-            return null;
-        }
 	}
+
+    private class DLLListIterator implements ListIterator<E> {
+        private BidirectionalNode<E> previous;
+		private BidirectionalNode<E> current;
+		private BidirectionalNode<E> next;
+		private int iterModCount;
+		private boolean removeable;
+		
+		/** Creates a new iterator for the list */
+		public DLLListIterator() {
+			previous = null;
+			current = null;
+			next = front;
+			iterModCount = modCount;
+		}
+
+		@Override
+		public boolean hasNext() {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            return next != null;
+        }
+
+		@Override
+		public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            if (current != null) {
+                previous = current;
+            }
+            current = next;
+            next = next.getNext();
+            removeable = true;
+            return current.getElement();
+        }
+		
+		@Override
+		public void remove() {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+			if (!removeable) {
+				throw new IllegalStateException();
+			}
+            if (current == null) {
+                throw new IllegalStateException();
+            }
+            if (previous == null) {
+                front = next;
+            } else {
+                previous.setNext(next);
+            }
+            if (current == rear) {
+                rear = previous;
+            }
+            current = null;
+            removeable = false;
+            count--;
+            modCount++;
+            iterModCount++;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            return previous != null;
+        }
+
+        @Override
+        public E previous() {
+            if (!hasPrevious()) {
+                throw new NoSuchElementException();
+            }
+            if (current != null) {
+                current = previous;
+            }
+            current = previous;
+            next = current.getNext();
+            removeable = true;
+            return current.getElement();
+        }
+
+        // if (!hasNext()) {
+        //         throw new NoSuchElementException();
+        //     }
+        //     if (current != null) {
+        //         previous = current;
+        //     }
+        //     current = next;
+        //     next = next.getNext();
+        //     removeable = true;
+        //     return current.getElement();
+        @Override
+        public int nextIndex() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'nextIndex'");
+        }
+
+        @Override
+        public int previousIndex() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'previousIndex'");
+        }
+
+        @Override
+        public void set(E e) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'set'");
+        }
+
+        @Override
+        public void add(E e) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'add'");
+        }
+        
+    }
 
 	// IGNORE THE FOLLOWING CODE
 	// DON'T DELETE ME, HOWEVER!!!
 	@Override
 	public ListIterator<E> listIterator() {
-		return null;
+		return new DLLListIterator();
 	}
 
 	@Override
