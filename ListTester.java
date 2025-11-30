@@ -271,7 +271,7 @@ public class ListTester {
 			// Scenario: 57
 		testSingleElementList(AB_iterator1NextRemove_A, "AB_iterator1NextRemove_A", LIST_A, STRING_A);
 			// Scenario: 60
-
+		testTwoElementList(ABC_iterator1NextRemove_AC, "ABC_iterator1NextRemove_AC", LIST_AC, STRING_AC);
 			// Scenario: 66
 		testEmptyList(A_iterator1PreviousRemove_empty, "A_iterator1PreviousRemove_empty");
 
@@ -282,7 +282,7 @@ public class ListTester {
 			// Scenario: 90
 		testThreeElementList(AB_iterator2PreviousAddC_ACB, "AB_iterator2PreviousAddC_ACB", LIST_ACB, STRING_ACB);
 			// Scenario: 96
-
+		testThreeElementList(ABC_iterator1NextSetD_ADC, "ABC_iterator1NextSetD_ADC", LIST_ADC, STRING_ADC);
 			// Scenario: 99
 		testThreeElementList(ABC_iterator2PreviousSetD_ADC, "ABC_iterator2PreviousSetD_ADC", LIST_ADC, STRING_ADC);
 		}
@@ -535,7 +535,7 @@ public class ListTester {
 	private Scenario<Integer> AB_removeB_A = () -> AB_removeB_A();
 
 	 
-	/** Scenario #29: [A,B] -> remove(0) -> [B] Gabe (test)
+	/** Scenario #29: [A,B] -> remove(0) -> [B] Gabe
 	 * @return [B] after remove(0)
 	 */
 	private IndexedUnsortedList<Integer> AB_remove0_B() {
@@ -761,6 +761,14 @@ public class ListTester {
 	/** Scenario #60: [A,B,C] -> iterator(1), next(), remove() -> [A,C] Gabe
 	 * @return [A,C] after iterator(1), next(), remove()
 	 */
+	private IndexedUnsortedList<Integer> ABC_iterator1NextRemove_AC() {
+		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
+		ListIterator<Integer> iter = list.listIterator(1);
+		iter.next();
+		iter.remove();
+		return list;
+	}
+	private Scenario<Integer> ABC_iterator1NextRemove_AC = () -> ABC_iterator1NextRemove_AC();
 
 	/** Scenario #66: [A] -> iterator(1), previous(), remove() -> [] Wesley
 	 * @return [] after iterator(1), previous(), remove()
@@ -802,9 +810,18 @@ public class ListTester {
 		return list;
 	}
 	private Scenario<Integer> AB_iterator2PreviousAddC_ACB = () -> AB_iterator2PreviousAddC_ACB();
+	
 	/** Scenario #96: [A,B,C] -> iterator(1), next(), set(D) -> [A,D,C] Gabe
 	 * @return [A,D,C] after iterator(1), next(), set(D)
 	 */
+	private IndexedUnsortedList<Integer> ABC_iterator1NextSetD_ADC() {
+		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
+		ListIterator<Integer> iter = list.listIterator(1);
+		iter.next();
+		iter.set(ELEMENT_D);
+		return list;
+	}
+	private Scenario<Integer> ABC_iterator1NextSetD_ADC = () -> ABC_iterator1NextSetD_ADC();
 
 	/** Scenario #99: [A,B,C] -> iterator(2), previous(), set(D) -> [A,D,C] Wesley
 	 * @return [A] after iterator, previous(), set(D)
