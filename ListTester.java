@@ -872,8 +872,8 @@ public class ListTester {
 				printTest(scenarioName + "_testListIter0SetX", testListIterSet(WrapIt.prep(scenario.build(), 0).getListIterator(), ELEMENT_X, Result.IllegalState));
 				printTest(scenarioName + "_testListIter0Remove", testListIterRemove(WrapIt.prep(scenario.build(), 0).getListIterator(), Result.IllegalState));
 			} else {
-				printTest(scenarioName + "_testListIter", testListIter(scenario.build(), Result.UnsupportedOperation));
-				printTest(scenarioName + "_testListIter0", testListIter(scenario.build(), 0, Result.UnsupportedOperation));
+				printTest(scenarioName + "_testListIter", testListIter(scenario.build(), Result.NoException));
+				printTest(scenarioName + "_testListIter0", testListIter(scenario.build(), 0, Result.NoException));
 			}
 		} catch (Exception e) {
 			System.out.printf("***UNABLE TO RUN/COMPLETE %s***\n", scenarioName + " TESTS");

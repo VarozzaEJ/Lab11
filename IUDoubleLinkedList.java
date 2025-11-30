@@ -135,14 +135,30 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E remove(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        BidirectionalNode<E> current = front, previous = null;
+        for (int i = 0; i < index; i++) {
+            previous = current;
+            current = current.getNext();
+        }
+        return removeElement(previous, current);
     }
 
     @Override
     public void set(int index, E element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'set'");
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        BidirectionalNode<E> current = front;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        current.setElement(element);
     }
 
     @Override
@@ -152,6 +168,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         for(int i = 0; i < index; i++) {
             node = node.getNext();
         }
+        if(node == null) throw new IndexOutOfBoundsException();
         return node.getElement();
     }
 
@@ -206,6 +223,21 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     public int size() {
         return this.count;
     }
+
+    @Override
+	public String toString() {
+		String result = "[";
+		BidirectionalNode<E> current = front;
+		while (current != null) {
+			result += current.getElement().toString();
+			if (current.getNext() != null) {
+				result += ",";
+			}
+			current = current.getNext();
+		}
+		result += "]";
+		return result;
+	}
 
     private E removeElement(BidirectionalNode<E> previous, BidirectionalNode<E> current) {
 		// Grab element
