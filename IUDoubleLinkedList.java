@@ -372,13 +372,33 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
                 throw new NoSuchElementException();
             }
             if (current != null) {
-                current = previous;
+                next = current;
             }
             current = previous;
-            next = current.getNext();
+            // Move previous pointer back
+            BidirectionalNode<E> temp = front;
+            BidirectionalNode<E> prevPrev = null;
+            while (temp != null && temp != current) {
+                prevPrev = temp;
+                temp = temp.getNext();
+            }
+            previous = prevPrev;
             removeable = true;
             return current.getElement();
         }
+        // @Override
+        // public E previous() {
+        //     if (!hasPrevious()) {
+        //         throw new NoSuchElementException();
+        //     }
+        //     if (current != null) {
+        //         current = previous;
+        //     }
+        //     current = previous;
+        //     next = current.getNext();
+        //     removeable = true;
+        //     return current.getElement();
+        // }
 
         // if (!hasNext()) {
         //         throw new NoSuchElementException();
@@ -392,26 +412,57 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         //     return current.getElement();
         @Override
         public int nextIndex() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'nextIndex'");
+            if(indexOf(current.getElement()) == size() - 1) {
+                return size();
+            }
+            return indexOf(current.getElement()) + 1;
         }
 
         @Override
         public int previousIndex() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'previousIndex'");
+            if(indexOf(current.getElement()) == 0) {
+                return -1;
+            }
+            return indexOf(current.getElement()) - 1;
         }
 
         @Override
         public void set(E e) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'set'");
+            if(iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            if(!removeable) {
+                throw new IllegalStateException();
+            }
+            current.setElement(e);
+            modCount++;
+            iterModCount++;
         }
 
         @Override
         public void add(E e) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'add'");
+            if(iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            BidirectionalNode<E> newNode = new BidirectionalNode<E>(e);
+            if(previous == null) {
+                newNode.setNext(front);
+                front = newNode;
+                if(rear == null) {
+                    rear = newNode;
+                }
+            } else {
+                previous.setNext(newNode);
+                newNode.setNext(current);
+                if(newNode.getNext() == null) {
+                    rear = newNode;
+                }
+            }
+            count++;
+            modCount++;
+            iterModCount++;
+            previous = newNode;
+            removeable = false;
         }
         
     }
@@ -425,7 +476,14 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
 	@Override
 	public ListIterator<E> listIterator(int startingIndex) {
-		throw new UnsupportedOperationException();
+		DLLListIterator iter = new DLLListIterator();
+        if (startingIndex < 0 || startingIndex > size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        for (int i = 0; i < startingIndex; i++) {
+            iter.next();
+        }
+        return iter;
 	}
 
     
