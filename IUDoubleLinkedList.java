@@ -135,11 +135,11 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E remove(int index) {
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        }
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException();
+        }
+        if (isEmpty()) {
+            throw new NoSuchElementException();
         }
         BidirectionalNode<E> current = front, previous = null;
         for (int i = 0; i < index; i++) {
@@ -333,6 +333,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 		private BidirectionalNode<E> next;
 		private int iterModCount;
 		private boolean removeable;
+		private int nextIdx;
 		
 		/** Creates a new iterator for the list */
 		public DLLListIterator() {
@@ -340,6 +341,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			current = null;
 			next = front;
 			iterModCount = modCount;
+			nextIdx = 0;
 		}
 
 		@Override
@@ -360,6 +362,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             }
             current = next;
             next = next.getNext();
+            nextIdx++;
             removeable = true;
             return current.getElement();
         }
@@ -395,11 +398,14 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             if (iterModCount != modCount) {
                 throw new ConcurrentModificationException();
             }
-            return previous != null;
+            return nextIdx > 0;
         }
 
         @Override
         public E previous() {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
             if (!hasPrevious()) {
                 throw new NoSuchElementException();
             }
@@ -407,6 +413,9 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
                 next = current;
             }
             current = previous;
+            if (current == null) {
+                throw new NoSuchElementException();
+            }
             // Move previous pointer back
             BidirectionalNode<E> temp = front;
             BidirectionalNode<E> prevPrev = null;
@@ -415,6 +424,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
                 temp = temp.getNext();
             }
             previous = prevPrev;
+            nextIdx--;
             removeable = true;
             return current.getElement();
         }
@@ -444,18 +454,38 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         //     return current.getElement();
         @Override
         public int nextIndex() {
-            if(indexOf(current.getElement()) == size() - 1) {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            if (next == null) {
                 return size();
             }
-            return indexOf(current.getElement()) + 1;
+            // Calculate the index by counting from the front
+            int index = 0;
+            BidirectionalNode<E> temp = front;
+            while (temp != null && temp != next) {
+                index++;
+                temp = temp.getNext();
+            }
+            return index;
         }
 
         @Override
         public int previousIndex() {
-            if(indexOf(current.getElement()) == 0) {
+            if (iterModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            if (previous == null) {
                 return -1;
             }
-            return indexOf(current.getElement()) - 1;
+            // Calculate the index by counting from the front
+            int index = 0;
+            BidirectionalNode<E> temp = front;
+            while (temp != null && temp != previous) {
+                index++;
+                temp = temp.getNext();
+            }
+            return index;
         }
 
         @Override
@@ -493,7 +523,9 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             count++;
             modCount++;
             iterModCount++;
+            nextIdx++;
             previous = newNode;
+            current = null;
             removeable = false;
         }
         
