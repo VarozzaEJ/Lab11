@@ -153,7 +153,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         for (int i = 0; i < index; i++) curr = curr.getNext();
         curr.setElement(element);
 
-        modCount++;   // <-- required for iterator concurrency
+        modCount++;
     }
 
     @Override
@@ -177,34 +177,44 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         return -1;
     }
 
-    @Override public E first() {
+    @Override 
+    public E first() {
         if (isEmpty()) throw new NoSuchElementException();
         return front.getElement();
     }
 
-    @Override public E last() {
+    @Override 
+    public E last() {
         if (isEmpty()) throw new NoSuchElementException();
         return rear.getElement();
     }
 
-    @Override public boolean contains(E e) {
+    @Override 
+    public boolean contains(E e) {
         return indexOf(e) != -1;
     }
 
-    @Override public boolean isEmpty() { return count == 0; }
-    @Override public int size() { return count; }
+    @Override 
+    public boolean isEmpty() { 
+        return count == 0; 
+    }
+
+    @Override 
+    public int size() { 
+        return count; 
+    }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("[");
+        String str = new String("[");
         BidirectionalNode<E> curr = front;
         while (curr != null) {
-            sb.append(curr.getElement());
-            if (curr.getNext() != null) sb.append(",");
+            str += curr.getElement();
+            if (curr.getNext() != null) str += ",";
             curr = curr.getNext();
         }
-        sb.append("]");
-        return sb.toString();
+        str += "]";
+        return str;
     }
 
     // ============================================================
@@ -268,7 +278,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     }
 
     // ============================================================
-    // LIST ITERATOR (FINALLY FIXED VERSION)
+    // LIST ITERATOR
     // ============================================================
 
     private class DLLListIterator implements ListIterator<E> {
@@ -327,8 +337,15 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             return curr.getElement();
         }
 
-        @Override public int nextIndex() { checkMod(); return nextIdx; }
-        @Override public int previousIndex() { checkMod(); return nextIdx - 1; }
+        @Override 
+        public int nextIndex() { 
+            checkMod(); return nextIdx; 
+        }
+
+        @Override 
+        public int previousIndex() {
+             checkMod(); return nextIdx - 1; 
+        }
 
         @Override
         public void remove() {
@@ -398,7 +415,9 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     }
 
     @Override
-    public ListIterator<E> listIterator() { return new DLLListIterator(); }
+    public ListIterator<E> listIterator() { 
+        return new DLLListIterator(); 
+    }
 
     @Override
     public ListIterator<E> listIterator(int start) {
