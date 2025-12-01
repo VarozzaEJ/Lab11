@@ -273,7 +273,7 @@ public class ListTester {
 		testSingleElementList(AB_iterator1NextRemove_A, "AB_iterator1NextRemove_A", LIST_A, STRING_A);
 			// Scenario: 60
 		testTwoElementList(ABC_iterator1NextRemove_AC, "ABC_iterator1NextRemove_AC", LIST_AC, STRING_AC);
-		
+			// Scenario: 66
 		testEmptyList(A_iterator1PreviousRemove_empty, "A_iterator1PreviousRemove_empty");
 
 			// Scenario: 71
