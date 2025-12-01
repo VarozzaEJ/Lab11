@@ -272,8 +272,8 @@ public class ListTester {
 			// Scenario: 57
 		testSingleElementList(AB_iterator1NextRemove_A, "AB_iterator1NextRemove_A", LIST_A, STRING_A);
 			// Scenario: 60
-
-			// Scenario: 66
+		testTwoElementList(ABC_iterator1NextRemove_AC, "ABC_iterator1NextRemove_AC", LIST_AC, STRING_AC);
+		
 		testEmptyList(A_iterator1PreviousRemove_empty, "A_iterator1PreviousRemove_empty");
 
 			// Scenario: 71
@@ -762,6 +762,14 @@ public class ListTester {
 	/** Scenario #60: [A,B,C] -> iterator(1), next(), remove() -> [A,C] Gabe
 	 * @return [A,C] after iterator(1), next(), remove()
 	 */
+	private IndexedUnsortedList<Integer> ABC_iterator1NextRemove_AC() {
+        IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
+        ListIterator<Integer> iter = list.listIterator(1);
+        iter.next();
+        iter.remove();
+        return list;
+    }
+    private Scenario<Integer> ABC_iterator1NextRemove_AC = () -> ABC_iterator1NextRemove_AC();
 
 	/** Scenario #66: [A] -> iterator(1), previous(), remove() -> [] Wesley
 	 * @return [] after iterator(1), previous(), remove()
