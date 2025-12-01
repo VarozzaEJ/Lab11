@@ -1,5 +1,6 @@
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -282,7 +283,7 @@ public class ListTester {
 			// Scenario: 90
 		testThreeElementList(AB_iterator2PreviousAddC_ACB, "AB_iterator2PreviousAddC_ACB", LIST_ACB, STRING_ACB);
 			// Scenario: 96
-
+		testThreeElementList(ABC_iterator1NextSetD_ADC, "ABC_iterator1NextSetD_ADC", LIST_ADC, STRING_ADC);	
 			// Scenario: 99
 		testThreeElementList(ABC_iterator2PreviousSetD_ADC, "ABC_iterator2PreviousSetD_ADC", LIST_ADC, STRING_ADC);
 		}
@@ -813,6 +814,14 @@ public class ListTester {
 	/** Scenario #96: [A,B,C] -> iterator(1), next(), set(D) -> [A,D,C] Gabe
 	 * @return [A,D,C] after iterator(1), next(), set(D)
 	 */
+	 private IndexedUnsortedList<Integer> ABC_iterator1NextSetD_ADC() {
+        IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
+        ListIterator<Integer> iter = list.listIterator(1);
+        iter.next();
+        iter.set(ELEMENT_D);
+        return list;
+    }
+    private Scenario<Integer> ABC_iterator1NextSetD_ADC = () -> ABC_iterator1NextSetD_ADC();
 
 	/** Scenario #99: [A,B,C] -> iterator(2), previous(), set(D) -> [A,D,C] Wesley
 	 * @return [A] after iterator, previous(), set(D)
