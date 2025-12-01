@@ -290,8 +290,8 @@ public class ListTester {
 
 
 		//Iterator concurrency tests
-		//TODO uncomment this line after implementing iterator methods.
-		// test_IterConcurrency();
+		//TODO uncomment this line after implementing iterator methods. I uncommened this, it was from lab10.
+		test_IterConcurrency();
 		if (SUPPORTS_LIST_ITERATOR) {
 			test_ListIterConcurrency();
 		}
