@@ -1,5 +1,6 @@
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -276,21 +277,21 @@ public class ListTester {
 		testEmptyList(A_iterator1PreviousRemove_empty, "A_iterator1PreviousRemove_empty");
 
 			// Scenario: 71
-
+		testTwoElementList(ABC_iterator2PreviousRemove_AC, "ABC_iterator2PreviousRemove_AC", LIST_AC, STRING_AC);
 			// Scenario: 87
 		testThreeElementList(AB_iterNextAddC_ACB, "AB_iterNextAddC_ACB", LIST_ACB, STRING_ACB);
 			// Scenario: 90
 		testThreeElementList(AB_iterator2PreviousAddC_ACB, "AB_iterator2PreviousAddC_ACB", LIST_ACB, STRING_ACB);
 			// Scenario: 96
-		testThreeElementList(ABC_iterator1NextSetD_ADC, "ABC_iterator1NextSetD_ADC", LIST_ADC, STRING_ADC);
+		testThreeElementList(ABC_iterator1NextSetD_ADC, "ABC_iterator1NextSetD_ADC", LIST_ADC, STRING_ADC);	
 			// Scenario: 99
 		testThreeElementList(ABC_iterator2PreviousSetD_ADC, "ABC_iterator2PreviousSetD_ADC", LIST_ADC, STRING_ADC);
 		}
 
 
 		//Iterator concurrency tests
-		//TODO uncomment this line after implementing iterator methods.
-		// test_IterConcurrency();
+		//TODO uncomment this line after implementing iterator methods. I uncommened this, it was from lab10.
+		test_IterConcurrency();
 		if (SUPPORTS_LIST_ITERATOR) {
 			test_ListIterConcurrency();
 		}
@@ -571,7 +572,7 @@ public class ListTester {
 	 * @return [A,B] after remove(C)
 	 */
 	private IndexedUnsortedList<Integer> ABC_removeC_AB() {
-		IndexedUnsortedList<Integer> list = AB_addToFrontC_CAB();
+		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
 		list.remove(ELEMENT_C);
 		return list;
 	}
@@ -762,13 +763,13 @@ public class ListTester {
 	 * @return [A,C] after iterator(1), next(), remove()
 	 */
 	private IndexedUnsortedList<Integer> ABC_iterator1NextRemove_AC() {
-		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
-		ListIterator<Integer> iter = list.listIterator(1);
-		iter.next();
-		iter.remove();
-		return list;
-	}
-	private Scenario<Integer> ABC_iterator1NextRemove_AC = () -> ABC_iterator1NextRemove_AC();
+        IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
+        ListIterator<Integer> iter = list.listIterator(1);
+        iter.next();
+        iter.remove();
+        return list;
+    }
+    private Scenario<Integer> ABC_iterator1NextRemove_AC = () -> ABC_iterator1NextRemove_AC();
 
 	/** Scenario #66: [A] -> iterator(1), previous(), remove() -> [] Wesley
 	 * @return [] after iterator(1), previous(), remove()
@@ -784,7 +785,15 @@ public class ListTester {
 
 	/** Scenario #71: [A,B,C] -> iterator(2), previous(), remove() -> [A,C] Nazifa
 	 * @return [A,C] after iterator(2), previous(), remove()
-	 */
+	 */ 
+	private IndexedUnsortedList<Integer> ABC_iterator2PreviousRemove_AC() {
+		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC(); 
+		ListIterator<Integer> iter = list.listIterator(2);
+		iter.previous();
+		iter.remove();
+		return list;
+	}
+	private Scenario<Integer> ABC_iterator2PreviousRemove_AC = () -> ABC_iterator2PreviousRemove_AC();
 
 	/** Scenario #87: [A,B] -> iterator(0), next(), add(C) -> [A,C,B] Daniel
 	 * @return [A] after iterator(0), next(), add(C)
@@ -814,14 +823,14 @@ public class ListTester {
 	/** Scenario #96: [A,B,C] -> iterator(1), next(), set(D) -> [A,D,C] Gabe
 	 * @return [A,D,C] after iterator(1), next(), set(D)
 	 */
-	private IndexedUnsortedList<Integer> ABC_iterator1NextSetD_ADC() {
-		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
-		ListIterator<Integer> iter = list.listIterator(1);
-		iter.next();
-		iter.set(ELEMENT_D);
-		return list;
-	}
-	private Scenario<Integer> ABC_iterator1NextSetD_ADC = () -> ABC_iterator1NextSetD_ADC();
+	 private IndexedUnsortedList<Integer> ABC_iterator1NextSetD_ADC() {
+        IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
+        ListIterator<Integer> iter = list.listIterator(1);
+        iter.next();
+        iter.set(ELEMENT_D);
+        return list;
+    }
+    private Scenario<Integer> ABC_iterator1NextSetD_ADC = () -> ABC_iterator1NextSetD_ADC();
 
 	/** Scenario #99: [A,B,C] -> iterator(2), previous(), set(D) -> [A,D,C] Wesley
 	 * @return [A] after iterator, previous(), set(D)
