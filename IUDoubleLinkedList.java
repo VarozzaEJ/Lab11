@@ -159,6 +159,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             current = current.getNext();
         }
         current.setElement(element);
+        modCount++;
     }
 
     @Override
