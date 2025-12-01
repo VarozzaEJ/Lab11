@@ -8,10 +8,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     private int count, modCount;
     private BidirectionalNode<E> front, rear;
 
-    // ============================================================
-    // ADD METHODS
-    // ============================================================
-
     @Override
     public void addToFront(E element) {
         BidirectionalNode<E> newNode = new BidirectionalNode<E>(element);
@@ -76,10 +72,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         modCount++;
     }
 
-    // ============================================================
-    // REMOVE METHODS
-    // ============================================================
-
     @Override
     public E removeFirst() {
         if (isEmpty()) throw new NoSuchElementException();
@@ -140,10 +132,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         modCount++;
         return result;
     }
-
-    // ============================================================
-    // SET / GET / BASIC OPERATIONS
-    // ============================================================
 
     @Override
     public void set(int index, E element) {
@@ -217,9 +205,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         return str;
     }
 
-    // ============================================================
-    // ITERATOR
-    // ============================================================
 
     @Override
     public Iterator<E> iterator() {
@@ -276,10 +261,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             current = null;
         }
     }
-
-    // ============================================================
-    // LIST ITERATOR
-    // ============================================================
 
     private class DLLListIterator implements ListIterator<E> {
         private BidirectionalNode<E> next;
