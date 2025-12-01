@@ -412,6 +412,14 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             if (current != null) {
                 next = current;
             }
+            // If previous is null, traverse to find the node at position nextIdx - 1
+            if (previous == null && nextIdx > 0) {
+                BidirectionalNode<E> temp = front;
+                for (int i = 0; i < nextIdx - 2; i++) {
+                    temp = temp.getNext();
+                }
+                previous = temp;
+            }
             current = previous;
             if (current == null) {
                 throw new NoSuchElementException();
@@ -497,8 +505,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
                 throw new IllegalStateException();
             }
             current.setElement(e);
-            modCount++;
-            iterModCount++;
         }
 
         @Override
