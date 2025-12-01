@@ -572,7 +572,7 @@ public class ListTester {
 	 * @return [A,B] after remove(C)
 	 */
 	private IndexedUnsortedList<Integer> ABC_removeC_AB() {
-		IndexedUnsortedList<Integer> list = AB_addToFrontC_CAB();
+		IndexedUnsortedList<Integer> list = AB_addAfterBC_ABC();
 		list.remove(ELEMENT_C);
 		return list;
 	}
